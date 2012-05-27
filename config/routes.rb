@@ -1,10 +1,14 @@
 SampleApp::Application.routes.draw do
   
   resources :users
- 
+  resources :sessions, :only => [:new, :create, :destroy]
+  # so this is mapped to the sessions controller new action
+  # new = page, create= create = destroy = signout
 
   root :to => 'static_pages#home'
   match '/signup', :to => 'users#new'
+  match '/signin', :to => 'sessions#new'
+  match '/signout',:to => 'sessions#destroy', :via => :delete #should be evoked using HTTP request delete
   match '/help', :to => 'static_pages#help'
   match '/contact', :to => 'static_pages#contact'
   match '/about', :to => 'static_pages#about'
